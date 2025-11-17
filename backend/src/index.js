@@ -32,11 +32,11 @@ if (process.env.NODE_ENV === "production") {
 
     app.use(express.static(distPath));
 
-    app.get("/:path*", (req, res) => {
+    // Express 5 compatible fallback route
+    app.get(/.*/, (req, res) => {
         res.sendFile(path.join(distPath, "index.html"));
     });
 }
-
 
 server.listen(PORT,()=>{
     console.log(`Server is listening at port : ${PORT}`);
