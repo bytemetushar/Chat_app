@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import {io} from 'socket.io-client'
 
 
-const BASE_URL = import.meta.env.MODE === "development" ? 'http://localhost:5001' : window.location.origin
+// const BASE_URL = import.meta.env.MODE === "development" ? 'http://localhost:5001' : "https://chat-app-pcgp.onrender.com"
+const BASE_URL =  "https://chat-app-pcgp.onrender.com"
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -93,6 +94,7 @@ export const useAuthStore = create((set, get) => ({
 
     const socket = io(BASE_URL,{
       query : {
+        transports: ["websocket"],
         userId : authUser._id,
       }
     });
