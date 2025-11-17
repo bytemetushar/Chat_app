@@ -7,13 +7,11 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors';
 import {app, server} from './lib/socket.js';
 import path from "path";
-import { fileURLToPath } from "url"
 
 
 dotenv.config();
 const PORT = process.env.PORT;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.resolve();
 
 app.use(cors({
     origin : 'http://localhost:5173',
@@ -34,8 +32,7 @@ if (process.env.NODE_ENV === "production") {
 
     app.use(express.static(distPath));
 
-    app.get("/*", (req, res, next) => {
-        if (req.path.startsWith("/api")) return next();
+    app.get("/:path*", (req, res) => {
         res.sendFile(path.join(distPath, "index.html"));
     });
 }
